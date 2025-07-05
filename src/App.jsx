@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import Key from './Key.jsx'
 import React from 'react'
-import Letters from './Letters.jsx'
 import {cities} from './Cities.js'
 
 function App() {
-  const [pressedKeys, setPressedkeys] = useState([])
+  const [pressedKeys, setPressedkeys] = React.useState([])
+  const [Words, setWords] = React.useState('testing')
+
 
   const letterArray = [
   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
@@ -21,7 +22,10 @@ function App() {
   })
 
   function HandleClick(letter){
-    setPressedkeys(prevkeys =>([...prevkeys , letter]))
+    setPressedkeys(prevkeys =>(
+      prevkeys.includes(letter) ? [...prevkeys] : [...prevkeys, letter]
+    ))
+
     console.log(pressedKeys)
   }
 
@@ -36,11 +40,11 @@ function App() {
   })
   
 
-  let userInput= new Array(8).fill(null)
-
-  const displayedLetter= userInput.map((input, i)=>{
-    return <Letters key ={i} input={input}/>
+  const splitWord = Words.split('').map((word, index) => {
+    return <span key={index}> {word.toUpperCase()} </span> 
   })
+
+
   
   return (
     <>
@@ -48,8 +52,8 @@ function App() {
       <div className='Cities-container'>
         {renderCities}
       </div>
-      <div className="Letters-container">
-        {displayedLetter}
+      <div className="Letters-container">\
+        {splitWord}
       </div>
       <div id='keyboard' className='container'>
           {allLetters}

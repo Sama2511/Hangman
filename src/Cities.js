@@ -1,47 +1,47 @@
 export const cities = [
     {
         name: "Sydney",
-        backgroundColor: "#E2680F",
+        backgroundColor: "#1A237E",
         color: "#F9F4DA",
     },
     {
         name: "Canberra",
-        backgroundColor: "#328AF1",
+        backgroundColor: "#0D47A1",
         color: "#F9F4DA",
     },
     {
         name: "Brisbane",
-        backgroundColor: "#F4EB13",
+        backgroundColor: "#FFB300",
         color: "#1E1E1E",
     },
     {
         name: "Perth",
-        backgroundColor: "#2ED3E9",
+        backgroundColor: "#00ACC1",
         color: "#1E1E1E",
     },
     {
         name: "Melbourne",
-        backgroundColor: "#298EC6",
+        backgroundColor: "#37474F",
         color: "#F9F4DA",
     },
     {
         name: "Darwin",
-        backgroundColor: "#599137",
+        backgroundColor: "#558B2F",
         color: "#F9F4DA",
     },
     {
         name: "Adelaide",
-        backgroundColor: "#FFD742",
+        backgroundColor: "#F9A825",
         color: "#1E1E1E",
     },
     {
         name: "Newcastle",
-        backgroundColor: "#D02B2B",
+        backgroundColor: "#B71C1C",
         color: "#F9F4DA",
     },
     {
         name: "Hobart",
-        backgroundColor: "#2D519F",
+        backgroundColor: "#283593",
         color: "#F9F4DA",
     },
 ]
