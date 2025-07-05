@@ -6,7 +6,7 @@ export default function letters(props){
     
     return(
         <>
-            <p>{props.input}</p>
+            <span>{props.input}</span>
         </>
     )
 }
