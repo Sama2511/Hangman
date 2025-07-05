@@ -6,17 +6,70 @@ body{
   justify-content: center;
   align-items: center;
   height: 100vh;
+  font-family: "Hanken Grotesk", sans-serif;
+
 }
 
 button{
+  border: 1px solid white;
   padding: 13px;
   border-radius: 7px;
   background-color: #FCBA29;
   font-weight: 700;
-  font-family: "Hanken Grotesk", sans-serif;
   font-size: 16px;
+  cursor: pointer;
+}
+button:hover{
+  background-color: #242424;
+  color: white;
 }
 .container{
   display: grid;
   grid-template-columns: repeat(10, 1fr);  
+  gap: 7px;
+}
+
+.container button:nth-child(21){
+  grid-column-start: 3;
+}
+
+.Letters-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+}
+
+.Letters-container p{
+  background-color: #323232;
+  border-bottom: 1px solid white;
+  padding: 25px 25px;
+  margin-bottom: 4em;
+  color: white;
+  font-weight:bolder;
+  font-size: 18px;
+}
+
+.window{
+  display: flex;
+  border: 1px solid white;
+  flex-direction: column;
+  align-items: center;
+}
+
+.language-container{
+  display: flex;
+  gap:3px;
+  width: 60%;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2em;
+  cursor:default;
+}
+
+.language-container p{
+  background-color: wheat;
+  margin: 0;
+  padding: 5px;
+  border-radius: 5px;
 }

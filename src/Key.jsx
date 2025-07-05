@@ -1,6 +1,6 @@
 
-export default function Key(){
+export default function Key(props){
     return(
-        <button> A </button>
+        <button onClick={props.onClick}>{props.keyLetter}</button>
     )
 }
