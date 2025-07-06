@@ -19,6 +19,13 @@ button{
   font-size: 16px;
   cursor: pointer;
 }
+.correct{
+  background-color: rgb(128, 184, 44);
+}
+
+.incorrect{
+  background-color: rgb(204, 76, 76);
+}
 button:hover{
   background-color: #242424;
   color: white;

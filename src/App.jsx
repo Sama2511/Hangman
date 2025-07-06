@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react'
 import Key from './Key.jsx'
 import React from 'react'
 import {cities} from './Cities.js'
+import { clsx } from "clsx"
 
 function App() {
-  const [pressedKeys, setPressedkeys] = React.useState([])
-  const [Words, setWords] = React.useState('testing')
+  const [guessedLetters, setguessedLetters] = React.useState([])
+  const [hiddenWord, sethiddenWord] = React.useState('NANNI')
 
 
   const letterArray = [
@@ -22,26 +23,34 @@ function App() {
   })
 
   function HandleClick(letter){
-    setPressedkeys(prevkeys =>(
+    setguessedLetters(prevkeys =>(
       prevkeys.includes(letter) ? [...prevkeys] : [...prevkeys, letter]
     ))
-
-    console.log(pressedKeys)
   }
 
-  useEffect(()=>{
-      console.log(pressedKeys)
-  },[pressedKeys])
 
-  const allLetters = letterArray.map((lett)=>{
-    return <Key key={lett} 
-                keyLetter={lett} 
-                onClick={()=>HandleClick(lett)}/>
+  const allLetters = letterArray.map((letter)=>{
+      const isGuessed = guessedLetters.includes(letter)
+      const isCorrect = isGuessed && hiddenWord.includes(letter)
+      const isIncorrect = isGuessed && !hiddenWord.includes(letter)
+
+      const classname = clsx({correct: isCorrect, incorrect: isIncorrect})
+
+
+    return (<button className = {classname}
+                key={letter} 
+                onClick={()=>HandleClick(letter)} >
+                {letter} </button>
+                )
   })
-  
 
-  const splitWord = Words.split('').map((word, index) => {
-    return <span key={index}> {word.toUpperCase()} </span> 
+
+  const splitWord = hiddenWord.split('').map((word, index) => {
+    return (
+    <span key={index}> 
+      {guessedLetters.includes(word)? word : ''} 
+    </span>
+    ) 
   })
 
 
