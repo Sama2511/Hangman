@@ -62,6 +62,7 @@ button:hover{
   border: 1px solid white;
   flex-direction: column;
   align-items: center;
+  height: 60vh;
 }
 
 .Cities-container{
@@ -74,9 +75,29 @@ button:hover{
   cursor:default;
 }
 
-.Cities-container span{
+.span-container{
   background-color: wheat;
   margin: 0;
   padding: 5px;
   border-radius: 5px;
+  position: relative;
+}
+
+
+.lost::before {
+    content: "☢️";
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    font-size: 0.85rem;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.newGame-btn{
+  margin-top: 3em;
+  background-color: #11B5E5;
 }

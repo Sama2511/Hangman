@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import Key from './Key.jsx'
 import React from 'react'
 import {cities} from './Cities.js'
 import { clsx } from "clsx"
@@ -7,16 +6,25 @@ import { clsx } from "clsx"
 function App() {
   const [guessedLetters, setguessedLetters] = React.useState([])
   const [hiddenWord, sethiddenWord] = React.useState('NANNI')
-
+  const [GameOver, setGameOver] = useState(false)
 
   const letterArray = [
   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
   'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
   'U', 'V', 'W', 'X', 'Y', 'Z']
 
-  const renderCities = cities.map((city) => {
+    let wrongGuessCount = guessedLetters.filter(letter=>
+        !hiddenWord.includes(letter)).length
+    
+
+  const renderCities = cities.map((city, index) => {
+
     return ( 
-      <span key={city.name} style={{backgroundColor: city.backgroundColor, color: city.color}}>
+      <span className={clsx('span-container', {'lost': index < wrongGuessCount}  )}
+      key={city.name} 
+      style={{backgroundColor: city.backgroundColor, 
+      color: city.color}}
+      >
         {city.name}
       </span>
     )
@@ -44,6 +52,7 @@ function App() {
                 )
   })
 
+  
 
   const splitWord = hiddenWord.split('').map((word, index) => {
     return (
@@ -52,9 +61,10 @@ function App() {
     </span>
     ) 
   })
+  useEffect(()=>{
+    wrongGuessCount === renderCities.length && setGameOver(true)
+  },[guessedLetters])
 
-
-  
   return (
     <>
     <div className='window'>
@@ -67,6 +77,7 @@ function App() {
       <div id='keyboard' className='container'>
           {allLetters}
       </div>
+      { GameOver && <button className='newGame-btn'>New Game</button>}
     </div>
 
     </>
