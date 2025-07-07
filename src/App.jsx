@@ -68,6 +68,7 @@ function App() {
   return (
     <>
     <div className='window'>
+      
       <div className='Cities-container'>
         {renderCities}
       </div>
