@@ -1,86 +1,122 @@
-import { useEffect, useState } from 'react'
-import React from 'react'
-import {cities} from './Cities.js'
+import React, { useState } from 'react'
+import { cities } from './Cities.js'
+import { getRandomWord } from './words.js'
 import { clsx } from "clsx"
 
 function App() {
-  const [guessedLetters, setguessedLetters] = React.useState([])
-  const [hiddenWord, sethiddenWord] = React.useState('NANNI')
-  const [GameOver, setGameOver] = useState(false)
+  //  Game State 
+  const [guessedLetters, setGuessedLetters] = useState([])
+  const [hiddenWord, setHiddenWord] = useState(getRandomWord())
 
+  //  Derived Game Values 
+  const wrongGuessCount = guessedLetters.filter(
+    letter => !hiddenWord.includes(letter)
+  ).length
+
+  const isGameWon = hiddenWord
+    .split('')
+    .every(letter => guessedLetters.includes(letter))
+
+  const isGameLost = wrongGuessCount >= cities.length
+  const isGameOver = isGameWon || isGameLost
+
+  //  Letter Pool 
   const letterArray = [
-  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-  'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-  'U', 'V', 'W', 'X', 'Y', 'Z']
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+    'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+    'U', 'V', 'W', 'X', 'Y', 'Z'
+  ]
 
-    let wrongGuessCount = guessedLetters.filter(letter=>
-        !hiddenWord.includes(letter)).length
-    
-
+  //  Render City Tags 
   const renderCities = cities.map((city, index) => {
-
-    return ( 
-      <span className={clsx('span-container', {'lost': index < wrongGuessCount}  )}
-      key={city.name} 
-      style={{backgroundColor: city.backgroundColor, 
-      color: city.color}}
+    return (
+      <span
+        key={city.name}
+        className={clsx('span-container', { 'lost': index < wrongGuessCount })}
+        style={{ backgroundColor: city.backgroundColor, color: city.color }}
       >
         {city.name}
       </span>
     )
   })
 
-  function HandleClick(letter){
-    setguessedLetters(prevkeys =>(
-      prevkeys.includes(letter) ? [...prevkeys] : [...prevkeys, letter]
-    ))
+  //  Handle Letter Guess 
+  function handleClick(letter) {
+    setGuessedLetters(prev =>
+      prev.includes(letter) ? prev : [...prev, letter]
+    )
   }
 
+  //  Render On-Screen Keyboard 
+  const allLetters = letterArray.map(letter => {
+    const isGuessed = guessedLetters.includes(letter)
+    const isCorrect = isGuessed && hiddenWord.includes(letter)
+    const isIncorrect = isGuessed && !hiddenWord.includes(letter)
 
-  const allLetters = letterArray.map((letter)=>{
-      const isGuessed = guessedLetters.includes(letter)
-      const isCorrect = isGuessed && hiddenWord.includes(letter)
-      const isIncorrect = isGuessed && !hiddenWord.includes(letter)
+    const classname = clsx({
+      correct: isCorrect,
+      incorrect: isIncorrect
+    })
 
-      const classname = clsx({correct: isCorrect, incorrect: isIncorrect})
-
-
-    return (<button className = {classname}
-                key={letter} 
-                onClick={()=>HandleClick(letter)} >
-                {letter} </button>
-                )
-  })
-
-  
-
-  const splitWord = hiddenWord.split('').map((word, index) => {
     return (
-    <span key={index}> 
-      {guessedLetters.includes(word)? word : ''} 
-    </span>
-    ) 
+      <button
+        key={letter}
+        disabled={isGameOver}
+        className={classname}
+        onClick={() => handleClick(letter)}
+      >
+        {letter}
+      </button>
+    )
   })
-  useEffect(()=>{
-    wrongGuessCount === renderCities.length && setGameOver(true)
-  },[guessedLetters])
 
+  //  Reveal Hidden Word 
+  const splitWord = hiddenWord.split('').map((letter, index) => {
+    const reveal = isGameLost || guessedLetters.includes(letter) 
+    return (
+      <span 
+        className= {clsx(isGameLost && !guessedLetters.includes(letter) && 'missed-letter')}
+        key={index}>
+        {reveal ? letter : ''}
+      </span>
+    )
+  })
+
+
+  //  Restart Game 
+    function restartGame(){
+      setGuessedLetters([])
+      setHiddenWord(getRandomWord())
+    }
+
+  //  UI 
   return (
     <>
-    <div className='window'>
-      
-      <div className='Cities-container'>
-        {renderCities}
-      </div>
-      <div className="Letters-container">\
-        {splitWord}
-      </div>
-      <div id='keyboard' className='container'>
-          {allLetters}
-      </div>
-      { GameOver && <button className='newGame-btn'>New Game</button>}
-    </div>
+      <div className='window'>
+        <header>
+          <h1>Last City Standing</h1>
+          <p>Guess the word or watch Aussie cities get nuked!</p>
+        </header>
 
+        <section className={clsx('status', { Won: isGameWon, Lost: isGameLost })}>
+          {isGameWon ? <h2>You win</h2> : isGameLost ? <h2>You lost</h2> : ''}
+          {isGameWon ? <p>Well done! 🎉</p> : isGameLost ? <p>Australia is Doomed 😭</p> : ''}
+        </section>
+
+        <section className='Cities-container'>
+          {renderCities}
+        </section>
+
+        <section className="Letters-container">
+          {splitWord}
+        </section>
+
+        <section id='keyboard' className='container'>
+          {allLetters}
+        </section>
+
+        {isGameOver && <button onClick={restartGame} className='newGame-btn'>New Game</button>}
+      </div>
     </>
   )
 }
