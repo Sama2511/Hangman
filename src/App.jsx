@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { cities } from './Cities.js'
 import { getRandomWord } from './words.js'
 import { clsx } from "clsx"
 
 function App() {
+
   //  Game State 
   const [guessedLetters, setGuessedLetters] = useState([])
   const [hiddenWord, setHiddenWord] = useState(getRandomWord())
+  const [timeleft, setTimeLeft] = useState(100)
+  const [newGame , setNewGame] = useState(false)
 
   //  Derived Game Values 
   const wrongGuessCount = guessedLetters.filter(
@@ -17,7 +20,7 @@ function App() {
     .split('')
     .every(letter => guessedLetters.includes(letter))
 
-  const isGameLost = wrongGuessCount >= cities.length
+  const isGameLost = wrongGuessCount >= cities.length || timeleft === 0
   const isGameOver = isGameWon || isGameLost
 
   //  Letter Pool 
@@ -53,7 +56,7 @@ function App() {
     const isCorrect = isGuessed && hiddenWord.includes(letter)
     const isIncorrect = isGuessed && !hiddenWord.includes(letter)
 
-    const classname = clsx({
+    const classname = clsx('keyBtn',{
       correct: isCorrect,
       incorrect: isIncorrect
     })
@@ -87,7 +90,28 @@ function App() {
     function restartGame(){
       setGuessedLetters([])
       setHiddenWord(getRandomWord())
+      setNewGame(prev=> !prev)
+      setTimeLeft(100)
     }
+  
+
+   useEffect(()=>{
+
+    const id = setInterval(() => {
+     setTimeLeft(prev => {
+      if(prev <= 1){
+        clearInterval(id)
+        return 0 
+      }
+        return prev -10
+    })
+    }, 1000)
+
+    return()=> clearInterval(id)
+
+  },[newGame])
+
+
 
   //  UI 
   return (
@@ -116,6 +140,9 @@ function App() {
         </section>
 
         {isGameOver && <button onClick={restartGame} className='newGame-btn'>New Game</button>}
+        <div className='progress-container'>
+          <div className='progress-bar' style={{width: `${timeleft}%`}}></div>
+        </div>
       </div>
     </>
   )

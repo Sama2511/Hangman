@@ -1,5 +1,5 @@
 :root {
-  background-color: #242424;
+  background-color: #F4F1DE;
 }
 body{
   display: flex;
@@ -13,12 +13,13 @@ body{
 .window{
   display: flex;
   border: 1px solid rgb(61, 55, 55);
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   flex-direction: column;
   align-items: center;
   min-height: 90vh;
-
+  background-color: #a39f7e;
+  position: relative;
 }
 header{
   color: white;
@@ -28,6 +29,14 @@ header{
 header h1, p {
   margin:0; 
   margin-top: 0.7em;
+  color: #222222;
+}
+header h1{
+  font-size: 3rem;
+}
+header p{
+  font-weight: 600;
+  font-size: 1.3rem;
 }
 
 .status{
@@ -41,30 +50,46 @@ header h1, p {
   margin: 2em;
   padding: 5px 0;
   min-height:65px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
 }
 .status h2{
   margin: 0;
+  color: #FFFFFF;
+  
 }
 .status p {
   font-size: 1.2rem;
   margin: 0;
+  color: #FFFFFF;
 }
 .Lost{
-    background-color: #BA2A2A;
+    padding-top: 20px;
+    background-color: #D62828;
+    padding-bottom: 20px;
     }
 
 .Won{
-    background-color: #10A95B;
+    padding-top: 20px;
+    background-color: #2A9D8F;
+    padding-bottom: 20px;
+
 }
 
 button{
   border: 1px solid white;
   padding: 13px;
   border-radius: 7px;
-  background-color: #FCBA29;
+  background-color: #AF9F30;
   font-weight: 700;
   font-size: 16px;
   cursor: pointer;
+
+}
+.keyBtn{
+  color: black;
+  font-size: 1.5rem;
 }
 .correct{
   background-color: rgb(128, 184, 44);
@@ -99,13 +124,15 @@ button:hover{
 }
 
 .Letters-container span{
-  background-color: #323232;
+  background-color: #EFC081;
   border-bottom: 1px solid white;
   padding: 25px;
   color: white;
   font-weight:bolder;
-  font-size: 18px;
+  font-size:25px;
+  color: black;
 }
+
 .Letters-container span.missed-letter{
   color: #BA2A2A;
 }
@@ -170,5 +197,29 @@ button:hover{
 
 .newGame-btn{
   margin-top: 3em;
-  background-color: #11B5E5;
+  background-color: #0077B6;
+  color: #FFFFFF;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+:disabled{
+  cursor:not-allowed;
+}
+
+.progress-container {
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 30px;
+  background: #eee;            
+  border-radius: 0 0 7px 7px;
+  overflow: hidden;            
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #BA2A2A;   
+  width: 100%;                 
+  transition: none;
 }
