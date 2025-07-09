@@ -113,7 +113,7 @@ function App() {
 
 
 
-  //  UI 
+  //  User Interface
   return (
     <>
       <div className='window'>
